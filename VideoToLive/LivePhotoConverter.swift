@@ -80,7 +80,7 @@ enum LivePhotoConverter {
             throw ConvertError.noPhotoAccess
         }
         try await PHPhotoLibrary.shared().performChanges {
-            let req = PHAssetCreationRequest.creationRequestForAsset()
+            let req = PHAssetCreationRequest.forAsset()
             req.addResource(with: .photo, fileURL: jpgURL, options: nil)
             req.addResource(with: .pairedVideo, fileURL: movURL, options: nil)
         }
@@ -211,7 +211,7 @@ enum LivePhotoConverter {
         let mdStatus = CMMetadataFormatDescriptionCreateWithMetadataSpecifications(
             allocator: kCFAllocatorDefault,
             metadataType: kCMMetadataFormatType_Boxed,
-            specifications: [spec] as CFArray,
+            metadataSpecifications: [spec] as CFArray,
             formatDescriptionOut: &metaDesc)
         guard mdStatus == noErr, let metaDesc = metaDesc else {
             throw ConvertError.failed("元数据轨道创建失败")
